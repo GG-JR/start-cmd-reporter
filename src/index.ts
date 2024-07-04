@@ -3,6 +3,8 @@ import type {
   } from '@playwright/test/reporter';
 import { blue, bold, green, red, yellow, magenta, gray } from "picocolors";
 
+let countRetries = 0;
+
 
   export default class MyReporter implements Reporter {
     onBegin(config: FullConfig, suite: Suite) {
@@ -11,22 +13,26 @@ import { blue, bold, green, red, yellow, magenta, gray } from "picocolors";
           console.log(`${bold(red(`❌  No tests found`))}`); 
         }
         if (number === 1) {
-          console.log(`Starting the run with ${number} test for browser ${suite.title}`);  
+          console.log(`Starting the run with ${number} test`);  
         }
         else {
-          console.log(`Starting the run with ${number} tests for browser ${suite.title}`);
+          console.log(`Starting the run with ${number} tests`);
         }
         
     }
     
       onTestEnd(test: TestCase, result: TestResult) {
-        const message = `${result.status} - (${result.duration}ms)`;
+        const duration = `(${result.duration}ms)`;
 
         if (result.status === 'passed') {
-          console.log(`${test.title} ${bold(green(`✅ ${message}`))}`);
+          console.log(`${test.title} ${bold(green(`✅ ${result.status}`))} - ${duration}`);
         }
         if (result.status === 'failed') {
-          console.log(`${test.title} ${bold(red(`❌ ${message}`))}`);
+          const logRetry = (result.retry > 0) ? `retry ${result.retry}` : '';
+          if (result.retry) {
+            countRetries++;
+        }
+          console.log(`${test.title} ${bold(red(`❌ ${result.status}`))} - ${duration} ${logRetry}`);
         }
           
       }
@@ -37,6 +43,7 @@ import { blue, bold, green, red, yellow, magenta, gray } from "picocolors";
         console.log("---------");
         console.log(`Finished with status: ${statusColor}`);
         console.log(`Duration: ${totalTime}ms`);
+        console.log(`Retries: ${countRetries}`);
       }
 
   }
