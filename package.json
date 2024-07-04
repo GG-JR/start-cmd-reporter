@@ -1,0 +1,26 @@
+{
+  "name": "pw-reporter-new",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "build": "npm run compile",
+    "run": "node ./dist/src/index.js",
+    "test": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.6.1",
+    "node-fetch": "^3.3.2",
+    "picocolors": "^1.0.1",
+    "playwright": "^1.40.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.1",
+    "ts-node": "^10.9.2"
+  }
+}

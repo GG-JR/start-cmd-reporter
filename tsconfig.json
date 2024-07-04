@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowArbitraryExtensions": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
