@@ -11,26 +11,32 @@ import { blue, bold, green, red, yellow, magenta, gray } from "picocolors";
           console.log(`${bold(red(`❌  No tests found`))}`); 
         }
         if (number === 1) {
-          console.log(`Starting the run with ${number} test`);  
+          console.log(`Starting the run with ${number} test for browser ${suite.title}`);  
         }
         else {
-          console.log(`Starting the run with ${number} tests`);
+          console.log(`Starting the run with ${number} tests for browser ${suite.title}`);
         }
         
     }
     
       onTestEnd(test: TestCase, result: TestResult) {
+        const message = `${result.status} - (${result.duration}ms)`;
+
         if (result.status === 'passed') {
-          console.log(`${test.title} ${bold(green(`✅ ${result.status}`))}`);
+          console.log(`${test.title} ${bold(green(`✅ ${message}`))}`);
         }
         if (result.status === 'failed') {
-          console.log(`${test.title} ${bold(red(`❌ ${result.status}`))}`);
+          console.log(`${test.title} ${bold(red(`❌ ${message}`))}`);
         }
           
       }
     
       onEnd(result: FullResult) {
-        console.log(`Finished the run: ${result.status}`);
+        const totalTime = Math.round(result.duration);
+        const statusColor = (result.status === 'passed') ? `${bold(green(`✅ ${result.status}`))}` : `${bold(red(`❌ ${result.status}`))}`
+        console.log("---------");
+        console.log(`Finished with status: ${statusColor}`);
+        console.log(`Duration: ${totalTime}ms`);
       }
 
   }
